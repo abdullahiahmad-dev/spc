@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Admin Dashboard | SPC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+    <header class="bg-green-900 text-white p-5 flex justify-between items-center">
+        <div>
+            <h1 class="text-xl font-bold">SPC Integrated Recycling</h1>
+            <p class="text-sm text-green-200">Super Admin Panel</p>
+        </div>
+
+        <form action="/logout" method="POST">
+            <button class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded">
+                Logout
+            </button>
+        </form>
+    </header>
+
+    <main class="p-6">
+
+        <h2 class="text-2xl font-bold text-gray-800">
+            Welcome, <%= user.fullName %>
+        </h2>
+
+        <p class="text-gray-600 mt-2">
+            You are logged in as Super Admin.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-8">
+
+            <!-- Manage Admins -->
+            <a href="/superadmin/admins"
+               class="block bg-white rounded-lg shadow p-6 hover:shadow-xl transition">
+
+                <h3 class="font-bold text-gray-700">
+                    Manage Admins
+                </h3>
+
+                <p class="text-gray-500 text-sm mt-2">
+                    Create and manage CEO accounts.
+                </p>
+
+                <span class="text-green-700 text-sm font-semibold mt-4 inline-block">
+                    Manage CEOs →
+                </span>
+
+            </a>
+
+            <!-- Manage Branches -->
+            <a href="/superadmin/branches"
+            class="block bg-white rounded-lg shadow p-6 hover:shadow-xl transition">
+
+                <h3 class="font-bold text-gray-700">
+                    Manage Branches
+                </h3>
+
+                <p class="text-gray-500 text-sm mt-2">
+                    Create and manage company branches.
+                </p>
+
+                <span class="text-green-700 text-sm font-semibold mt-4 inline-block">
+                    Manage Branches →
+                </span>
+
+            </a>
+
+           <a href="/superadmin/managers"
+   class="block bg-white rounded-lg shadow p-6 hover:shadow-xl transition">
+
+    <h3 class="font-bold text-gray-700">
+        Manage Users
+    </h3>
+
+    <p class="text-gray-500 text-sm mt-2">
+        Create and manage Branch Manager accounts.
+    </p>
+
+    <span class="text-green-700 text-sm font-semibold mt-4 inline-block">
+        Manage Managers →
+    </span>
+
+</a>
+        </div>
+
+    </main>
+
+</body>
+</html>

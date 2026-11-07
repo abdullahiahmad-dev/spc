@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Branches | SPC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+    <header class="bg-green-900 text-white p-5 flex justify-between items-center">
+        <div>
+            <h1 class="text-xl font-bold">SPC Integrated Recycling</h1>
+            <p class="text-sm text-green-200">Super Admin Panel</p>
+        </div>
+
+        <a href="/superadmin/dashboard"
+           class="bg-white text-green-900 px-4 py-2 rounded">
+            Dashboard
+        </a>
+    </header>
+
+    <main class="max-w-6xl mx-auto p-6">
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">
+            Manage Company Branches
+        </h2>
+
+        <!-- Create Branch Form -->
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+
+            <h3 class="text-lg font-bold mb-5">
+                Create New Branch
+            </h3>
+
+            <form action="/superadmin/branches/create" method="POST">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                    <div>
+                        <label class="block mb-2 font-medium">
+                            Branch Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="branchName"
+                            required
+                            placeholder="e.g. Abuja Branch"
+                            class="w-full border rounded-lg p-3"
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block mb-2 font-medium">
+                            Branch Code
+                        </label>
+
+                        <input
+                            type="text"
+                            name="branchCode"
+                            required
+                            placeholder="e.g. ABJ001"
+                            class="w-full border rounded-lg p-3"
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block mb-2 font-medium">
+                            Location / City
+                        </label>
+
+                        <input
+                            type="text"
+                            name="location"
+                            required
+                            placeholder="e.g. Abuja, FCT"
+                            class="w-full border rounded-lg p-3"
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block mb-2 font-medium">
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="text"
+                            name="phone"
+                            placeholder="Branch phone number"
+                            class="w-full border rounded-lg p-3"
+                        >
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block mb-2 font-medium">
+                            Full Address
+                        </label>
+
+                        <textarea
+                            name="address"
+                            rows="3"
+                            placeholder="Enter the complete branch address"
+                            class="w-full border rounded-lg p-3"
+                        ></textarea>
+                    </div>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="mt-6 bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg"
+                >
+                    Create Branch
+                </button>
+
+            </form>
+        </div>
+
+        <!-- Existing Branches -->
+        <div class="bg-white rounded-lg shadow p-6">
+
+            <h3 class="text-lg font-bold mb-5">
+                Registered Branches
+            </h3>
+
+            <div class="overflow-x-auto">
+
+                <table class="w-full text-left border-collapse">
+
+                    <thead>
+                        <tr class="bg-gray-100">
+                            <th class="p-3 border">Branch Name</th>
+                            <th class="p-3 border">Branch Code</th>
+                            <th class="p-3 border">Location</th>
+                            <th class="p-3 border">Phone</th>
+                            <th class="p-3 border">Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <% if (branches.length === 0) { %>
+
+                            <tr>
+                                <td colspan="5"
+                                    class="p-5 text-center text-gray-500">
+                                    No branches created yet.
+                                </td>
+                            </tr>
+
+                        <% } else { %>
+
+                            <% branches.forEach(branch => { %>
+
+                                <tr>
+                                    <td class="p-3 border">
+                                        <%= branch.branchName %>
+                                    </td>
+
+                                    <td class="p-3 border">
+                                        <%= branch.branchCode %>
+                                    </td>
+
+                                    <td class="p-3 border">
+                                        <%= branch.location %>
+                                    </td>
+
+                                    <td class="p-3 border">
+                                        <%= branch.phone || 'N/A' %>
+                                    </td>
+
+                                    <td class="p-3 border">
+                                        <% if (branch.isActive) { %>
+                                            <span class="text-green-700 font-semibold">
+                                                Active
+                                            </span>
+                                        <% } else { %>
+                                            <span class="text-red-700 font-semibold">
+                                                Inactive
+                                            </span>
+                                        <% } %>
+                                    </td>
+                                </tr>
+
+                            <% }) %>
+
+                        <% } %>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+
+    </main>
+
+</body>
+</html>

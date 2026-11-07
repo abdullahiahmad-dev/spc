@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Branch Managers | SPC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+    <header class="bg-green-900 text-white p-5 flex justify-between items-center">
+        <div>
+            <h1 class="text-xl font-bold">SPC Integrated Recycling</h1>
+            <p class="text-sm text-green-200">Super Admin Panel</p>
+        </div>
+
+        <a href="/superadmin/dashboard"
+           class="bg-white text-green-900 px-4 py-2 rounded">
+            Dashboard
+        </a>
+    </header>
+
+    <main class="max-w-6xl mx-auto p-6">
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">
+            Manage Branch Managers
+        </h2>
+
+        <!-- Create Manager Form -->
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+
+            <h3 class="text-lg font-bold mb-5">
+                Create Branch Manager Account
+            </h3>
+
+            <form action="/superadmin/managers/create" method="POST">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                    <div>
+                        <label class="block mb-2 font-medium">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="fullName"
+                            required
+                            placeholder="Enter manager's full name"
+                            class="w-full border rounded-lg p-3"
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block mb-2 font-medium">
+                            Username
+                        </label>
+
+                        <input
+                            type="text"
+                            name="username"
+                            required
+                            placeholder="Enter username"
+                            class="w-full border rounded-lg p-3"
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block mb-2 font-medium">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            required
+                            placeholder="Enter email address"
+                            class="w-full border rounded-lg p-3"
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block mb-2 font-medium">
+                            Temporary Password
+                        </label>
+
+                        <input
+                            type="password"
+                            name="password"
+                            minlength="8"
+                            required
+                            placeholder="Minimum 8 characters"
+                            class="w-full border rounded-lg p-3"
+                        >
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block mb-2 font-medium">
+                            Assign Branch
+                        </label>
+
+                        <select
+                            name="branch"
+                            required
+                            class="w-full border rounded-lg p-3 bg-white"
+                        >
+                            <option value="">Select a branch</option>
+
+                            <% branches.forEach(branch => { %>
+                                <option value="<%= branch._id %>">
+                                    <%= branch.branchName %> -
+                                    <%= branch.branchCode %>
+                                </option>
+                            <% }) %>
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="mt-6 bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg"
+                >
+                    Create Branch Manager
+                </button>
+
+            </form>
+        </div>
+
+        <!-- Existing Managers -->
+        <div class="bg-white rounded-lg shadow p-6">
+
+            <h3 class="text-lg font-bold mb-5">
+                Registered Branch Managers
+            </h3>
+
+            <div class="overflow-x-auto">
+
+                <table class="w-full text-left border-collapse">
+
+                    <thead>
+                        <tr class="bg-gray-100">
+                            <th class="p-3 border">Full Name</th>
+                            <th class="p-3 border">Username</th>
+                            <th class="p-3 border">Email</th>
+                            <th class="p-3 border">Assigned Branch</th>
+                            <th class="p-3 border">Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <% if (managers.length === 0) { %>
+
+                            <tr>
+                                <td colspan="5"
+                                    class="p-5 text-center text-gray-500">
+                                    No Branch Managers created yet.
+                                </td>
+                            </tr>
+
+                        <% } else { %>
+
+                            <% managers.forEach(manager => { %>
+
+                                <tr>
+                                    <td class="p-3 border">
+                                        <%= manager.fullName %>
+                                    </td>
+
+                                    <td class="p-3 border">
+                                        <%= manager.username %>
+                                    </td>
+
+                                    <td class="p-3 border">
+                                        <%= manager.email %>
+                                    </td>
+
+                                    <td class="p-3 border">
+                                        <% if (manager.branch) { %>
+                                            <%= manager.branch.branchName %>
+                                            (<%= manager.branch.branchCode %>)
+                                        <% } else { %>
+                                            Not assigned
+                                        <% } %>
+                                    </td>
+
+                                    <td class="p-3 border">
+                                        <% if (manager.isActive) { %>
+                                            <span class="text-green-700 font-semibold">
+                                                Active
+                                            </span>
+                                        <% } else { %>
+                                            <span class="text-red-700 font-semibold">
+                                                Inactive
+                                            </span>
+                                        <% } %>
+                                    </td>
+                                </tr>
+
+                            <% }) %>
+
+                        <% } %>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+
+    </main>
+
+</body>
+</html>
